@@ -1,8 +1,5 @@
 extend schema
-  @link(
-    url: "https://specs.apollo.dev/federation/v2.7"
-    import: ["@key", "@tag"]
-  )
+  @link(url: "https://specs.apollo.dev/federation/v2.7", import: ["@key"])
 
 "A particular intergalactic location available for booking"
 type Listing {
@@ -36,12 +33,12 @@ type Query {
   listing(id: ID!): Listing
 }
 
-type Mutation @tag(name: "internal") {
+type Mutation {
   "Creates a new listing"
   createListing(input: CreateListingInput!): CreateListingResponse!
 }
 
-input CreateListingInput @tag(name: "internal") {
+input CreateListingInput {
   "The listing's title"
   title: String!
   "The listing's description"
@@ -56,7 +53,7 @@ input CreateListingInput @tag(name: "internal") {
   amenities: [ID!]!
 }
 
-type CreateListingResponse @tag(name: "internal") {
+type CreateListingResponse {
   "Similar to HTTP status code, represents the status of the mutation"
   code: Int!
   "Indicates whether the mutation was successful"
