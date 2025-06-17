@@ -1,6 +1,6 @@
-# (Odyssey Course) Federation with TypeScript
+# (Odyssey Course) Agentic GraphQL with MCP and GraphOS
 
-Welcome to the starter code for **Federation with TypeScript**. You can find the [course lessons and instructions](https://apollographql.com/tutorials/federation-typescript) on Odyssey, [Apollo](https://apollographql.com)'s learning platform.
+Welcome to the starter code for **Agentic GraphQL with MCP and GraphOS**. You can find the [course lessons and instructions](https://apollographql.com/tutorials/agentic-graphql-mcp) on Odyssey, [Apollo](https://apollographql.com)'s learning platform.
 
 ## How to use this repo
 
@@ -30,8 +30,6 @@ query GetFeaturedListings {
   }
 }
 ```
-
-The `final` branch of this repo contains the final stage of the course, with all of the steps and code completed! If you get stuck, you can refer to it and compare your code.
 
 ## Getting Help
 
