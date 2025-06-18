@@ -18,10 +18,10 @@ export const resolvers: Resolvers = {
     }
   },
   Mutation: {
-    createListing: async (_, {input}, {dataSources}) => {
+    createListing: async (_, {listing}, {dataSources}) => {
 
       try {
-      const response = await dataSources.listingAPI.createListing(input);
+      const response = await dataSources.listingAPI.createListing(listing);
       console.log(response);
       // everything succeeds with the mutation
       return {
