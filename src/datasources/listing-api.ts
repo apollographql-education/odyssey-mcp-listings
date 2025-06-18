@@ -16,9 +16,9 @@ export class ListingAPI extends RESTDataSource {
     console.log("Making a follow-up call for amenities with ", listingId);
     return this.get<Amenity[]>(`listings/${listingId}/amenities`)
   }
-  createListing(listing: CreateListingInput): Promise<Listing> {
+  createListing(input: CreateListingInput): Promise<Listing> {
     return this.post("listings", {
-      body: { listing }
+      body: { input }
     });
   }
 }

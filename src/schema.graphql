@@ -21,7 +21,7 @@ type Query {
 
 type Mutation @tag(name: "internal") {
   "Creates a new listing for the currently authenticated host"
-  createListing(listing: CreateListingInput!): CreateListingResponse!
+  createListing(input: CreateListingInput!): CreateListingResponse!
   "Updates an existing listing"
   updateListing(
     listingId: ID!
