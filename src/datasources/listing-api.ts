@@ -2,7 +2,7 @@ import { RESTDataSource } from "@apollo/datasource-rest";
 import { Listing, Amenity, CreateListingInput } from "../types";
 
 export class ListingAPI extends RESTDataSource {
-  baseURL = "https://rt-airlock-services-listing.herokuapp.com/";
+  baseURL = "https://airlock-listings.demo-api.apollo.dev/";
 
   getFeaturedListings(): Promise<Listing[]> {
     return this.get<Listing[]>("featured-listings");
