@@ -1,0 +1,24 @@
+{
+  "format": "apollo-persisted-query-manifest",
+  "version": 1,
+  "operations": [
+    {
+      "id": "4654ad9c7fed44b407e23605307fec2b6787ba42859ca57c53545a90618c4dfd",
+      "name": "GetFeaturedListings",
+      "type": "query",
+      "body": "query GetFeaturedListings {\n  featuredListings {\n    id\n    description\n    costPerNight\n    locationType\n    numOfBeds\n    __typename\n  }\n}"
+    },
+    {
+      "id": "a58da7631a37a2f719ac118f343a36814b0f0d5ff5e91a949a3f0fcdef23f858",
+      "name": "GetListing",
+      "type": "query",
+      "body": "query GetListing($listingId: ID!) {\n  listing(id: $listingId) {\n    id\n    title\n    description\n    photoThumbnail\n    photoInHexagonShape\n    numOfBeds\n    costPerNight\n    locationType\n    host {\n      id\n      __typename\n    }\n    amenities {\n      id\n      category\n      name\n      __typename\n    }\n    coordinates {\n      latitude\n      longitude\n      nickname\n      __typename\n    }\n    __typename\n  }\n}"
+    },
+    {
+      "id": "f4a58fd9eb9c14731f7edb6f0211f74ee7cbd77c730200cb13ca19bc9bebf05b",
+      "name": "GetUser",
+      "type": "query",
+      "body": "query GetUser($userId: ID!) {\n  user(id: $userId) {\n    id\n    name\n    profilePicture\n    ... on Host {\n      profileDescription\n      __typename\n    }\n    __typename\n  }\n}"
+    }
+  ]
+}
