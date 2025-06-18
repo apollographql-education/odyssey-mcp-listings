@@ -1,7 +1,7 @@
 extend schema
   @link(
-    url: "https://specs.apollo.dev/federation/v2.7"
-    import: ["@key", "@shareable", "@external"]
+    url: "https://specs.apollo.dev/federation/v2.9"
+    import: ["@key", "@shareable", "@external", "@tag"]
   )
 """
 Listing Graph
@@ -19,7 +19,7 @@ type Query {
   listingAmenities: [Amenity!]!
 }
 
-type Mutation {
+type Mutation @tag(name: "internal") {
   "Creates a new listing for the currently authenticated host"
   createListing(listing: CreateListingInput!): CreateListingResponse!
   "Updates an existing listing"
@@ -29,7 +29,7 @@ type Mutation {
   ): UpdateListingResponse!
 }
 
-interface MutationResponse {
+interface MutationResponse @tag(name: "internal") {
   "Similar to HTTP status code, represents the status of the mutation"
   code: Int!
   "Indicates whether the mutation was successful"
@@ -104,7 +104,7 @@ enum SortByCriteria {
   RATING_DESC
 }
 
-input CreateListingInput {
+input CreateListingInput @tag(name: "internal") {
   "The listing's title"
   title: String!
   "The listing's description"
@@ -122,7 +122,7 @@ input CreateListingInput {
 }
 
 "Updates the properties included. If none are given, don't update anything"
-input UpdateListingInput {
+input UpdateListingInput @tag(name: "internal") {
   "The listing's title"
   title: String
   "The listing's description"
@@ -139,7 +139,7 @@ input UpdateListingInput {
   amenities: [ID]
 }
 
-type CreateListingResponse implements MutationResponse {
+type CreateListingResponse implements MutationResponse @tag(name: "internal") {
   "Similar to HTTP status code, represents the status of the mutation"
   code: Int!
   "Indicates whether the mutation was successful"
@@ -150,7 +150,7 @@ type CreateListingResponse implements MutationResponse {
   listing: Listing
 }
 
-type UpdateListingResponse implements MutationResponse {
+type UpdateListingResponse implements MutationResponse @tag(name: "internal") {
   "Similar to HTTP status code, represents the status of the mutation"
   code: Int!
   "Indicates whether the mutation was successful"
