@@ -2,7 +2,7 @@ import { RESTDataSource } from "@apollo/datasource-rest";
 import { Listing, Amenity, CreateListingInput } from "../types";
 
 export class ListingAPI extends RESTDataSource {
-  baseURL = "https://airlock-listings.demo-api.apollo.dev/";
+  baseURL = "https://rt-airlock-services-listing.herokuapp.com/";
 
   getFeaturedListings(): Promise<Listing[]> {
     return this.get<Listing[]>("featured-listings");
@@ -16,9 +16,9 @@ export class ListingAPI extends RESTDataSource {
     console.log("Making a follow-up call for amenities with ", listingId);
     return this.get<Amenity[]>(`listings/${listingId}/amenities`)
   }
-  createListing(input: CreateListingInput): Promise<Listing> {
+  createListing(listing: CreateListingInput): Promise<Listing> {
     return this.post("listings", {
-      body: { input }
+      body: { listing }
     });
   }
 }
