@@ -15,6 +15,9 @@ export const resolvers: Resolvers = {
       return validateFullAmenities(amenities)
         ? amenities
         : dataSources.listingAPI.getAmenities(id);
+    },
+    host: ({ id }) => {
+      return { id }
     }
   },
   Mutation: {
