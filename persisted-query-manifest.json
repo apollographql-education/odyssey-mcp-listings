@@ -9,10 +9,10 @@
       "body": "query GetFeaturedListings {\n  featuredListings {\n    id\n    description\n    costPerNight\n    locationType\n    numOfBeds\n    __typename\n  }\n}"
     },
     {
-      "id": "a58da7631a37a2f719ac118f343a36814b0f0d5ff5e91a949a3f0fcdef23f858",
+      "id": "233eb95426d6c92c4b9eb0e591d3c1fb9749faac64f414380609ed07acb2816a",
       "name": "GetListing",
       "type": "query",
-      "body": "query GetListing($listingId: ID!) {\n  listing(id: $listingId) {\n    id\n    title\n    description\n    photoThumbnail\n    photoInHexagonShape\n    numOfBeds\n    costPerNight\n    locationType\n    host {\n      id\n      __typename\n    }\n    amenities {\n      id\n      category\n      name\n      __typename\n    }\n    coordinates {\n      latitude\n      longitude\n      nickname\n      __typename\n    }\n    __typename\n  }\n}"
+      "body": "query GetListing($listingId: ID!) {\n  listing(id: $listingId) {\n    id\n    title\n    description\n    photoThumbnail\n    numOfBeds\n    costPerNight\n    locationType\n    host {\n      id\n      __typename\n    }\n    __typename\n  }\n}"
     },
     {
       "id": "f4a58fd9eb9c14731f7edb6f0211f74ee7cbd77c730200cb13ca19bc9bebf05b",
