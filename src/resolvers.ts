@@ -16,8 +16,9 @@ export const resolvers: Resolvers = {
         ? amenities
         : dataSources.listingAPI.getAmenities(id);
     },
-    host: ({ id }) => {
-      return { id }
+    // @ts-ignore
+    host: ({ hostId }) => {
+      return { id: hostId }
     }
   },
   Mutation: {

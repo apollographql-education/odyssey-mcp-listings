@@ -1,4 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
+import { ListingEntityRepresentation } from './src/models';
 import { DataSourceContext } from './context';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -7,6 +8,7 @@ export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: 
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -15,6 +17,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  _FieldSet: { input: any; output: any; }
 };
 
 export type Amenity = {
@@ -212,6 +215,17 @@ export type UpdateListingResponse = MutationResponse & {
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
 
+export type ReferenceResolver<TResult, TReference, TContext> = (
+      reference: TReference,
+      context: TContext,
+      info: GraphQLResolveInfo
+    ) => Promise<TResult> | TResult;
+
+      type ScalarCheck<T, S> = S extends true ? T : NullableCheck<T, S>;
+      type NullableCheck<T, S> = Maybe<T> extends T ? Maybe<ListCheck<NonNullable<T>, S>> : ListCheck<T, S>;
+      type ListCheck<T, S> = T extends (infer U)[] ? NullableCheck<U, S>[] : GraphQLRecursivePick<T, S>;
+      export type GraphQLRecursivePick<T, S> = { [K in keyof T & keyof S]: ScalarCheck<T[K], S[K]> };
+    
 
 export type ResolverWithResolve<TResult, TParent, TContext, TArgs> = {
   resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
@@ -278,52 +292,52 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping of interface types */
 export type ResolversInterfaceTypes<_RefType extends Record<string, unknown>> = {
-  MutationResponse: ( CreateListingResponse ) | ( UpdateListingResponse );
+  MutationResponse: ( Omit<CreateListingResponse, 'listing'> & { listing?: Maybe<_RefType['Listing']> } ) | ( Omit<UpdateListingResponse, 'listing'> & { listing?: Maybe<_RefType['Listing']> } );
 };
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Amenity: ResolverTypeWrapper<Amenity>;
+  ID: ResolverTypeWrapper<Scalars['ID']['output']>;
+  String: ResolverTypeWrapper<Scalars['String']['output']>;
   AmenityCategory: AmenityCategory;
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   CreateListingInput: CreateListingInput;
-  CreateListingResponse: ResolverTypeWrapper<CreateListingResponse>;
   Float: ResolverTypeWrapper<Scalars['Float']['output']>;
+  Int: ResolverTypeWrapper<Scalars['Int']['output']>;
+  CreateListingResponse: ResolverTypeWrapper<Omit<CreateListingResponse, 'listing'> & { listing?: Maybe<ResolversTypes['Listing']> }>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   GalacticCoordinates: ResolverTypeWrapper<GalacticCoordinates>;
   Host: ResolverTypeWrapper<Host>;
-  ID: ResolverTypeWrapper<Scalars['ID']['output']>;
-  Int: ResolverTypeWrapper<Scalars['Int']['output']>;
-  Listing: ResolverTypeWrapper<Listing>;
+  Listing: ResolverTypeWrapper<ListingEntityRepresentation>;
   LocationType: LocationType;
   Mutation: ResolverTypeWrapper<{}>;
   MutationResponse: ResolverTypeWrapper<ResolversInterfaceTypes<ResolversTypes>['MutationResponse']>;
   Query: ResolverTypeWrapper<{}>;
   SearchListingsInput: SearchListingsInput;
   SortByCriteria: SortByCriteria;
-  String: ResolverTypeWrapper<Scalars['String']['output']>;
   UpdateListingInput: UpdateListingInput;
-  UpdateListingResponse: ResolverTypeWrapper<UpdateListingResponse>;
+  UpdateListingResponse: ResolverTypeWrapper<Omit<UpdateListingResponse, 'listing'> & { listing?: Maybe<ResolversTypes['Listing']> }>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Amenity: Amenity;
-  Boolean: Scalars['Boolean']['output'];
+  ID: Scalars['ID']['output'];
+  String: Scalars['String']['output'];
   CreateListingInput: CreateListingInput;
-  CreateListingResponse: CreateListingResponse;
   Float: Scalars['Float']['output'];
+  Int: Scalars['Int']['output'];
+  CreateListingResponse: Omit<CreateListingResponse, 'listing'> & { listing?: Maybe<ResolversParentTypes['Listing']> };
+  Boolean: Scalars['Boolean']['output'];
   GalacticCoordinates: GalacticCoordinates;
   Host: Host;
-  ID: Scalars['ID']['output'];
-  Int: Scalars['Int']['output'];
-  Listing: Listing;
+  Listing: ListingEntityRepresentation;
   Mutation: {};
   MutationResponse: ResolversInterfaceTypes<ResolversParentTypes>['MutationResponse'];
   Query: {};
   SearchListingsInput: SearchListingsInput;
-  String: Scalars['String']['output'];
   UpdateListingInput: UpdateListingInput;
-  UpdateListingResponse: UpdateListingResponse;
+  UpdateListingResponse: Omit<UpdateListingResponse, 'listing'> & { listing?: Maybe<ResolversParentTypes['Listing']> };
 };
 
 export type AmenityResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['Amenity'] = ResolversParentTypes['Amenity']> = {
@@ -349,11 +363,13 @@ export type GalacticCoordinatesResolvers<ContextType = DataSourceContext, Parent
 };
 
 export type HostResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['Host'] = ResolversParentTypes['Host']> = {
+  __resolveReference?: ReferenceResolver<Maybe<ResolversTypes['Host']>, { __typename: 'Host' } & GraphQLRecursivePick<ParentType, {"id":true}>, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type ListingResolvers<ContextType = DataSourceContext, ParentType extends ResolversParentTypes['Listing'] = ResolversParentTypes['Listing']> = {
+  __resolveReference?: ReferenceResolver<Maybe<ResolversTypes['Listing']>, { __typename: 'Listing' } & GraphQLRecursivePick<ParentType, {"id":true}>, ContextType>;
   amenities?: Resolver<Array<Maybe<ResolversTypes['Amenity']>>, ParentType, ContextType>;
   coordinates?: Resolver<Maybe<ResolversTypes['GalacticCoordinates']>, ParentType, ContextType>;
   costPerNight?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
